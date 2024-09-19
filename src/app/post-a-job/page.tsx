@@ -2,7 +2,9 @@
 
 import CKEditor from "@/components/organisms/CKEditor";
 import FieldInput from "@/components/organisms/FieldInput";
+import InputBenefits from "@/components/organisms/InputBenefits";
 import InputSkills from "@/components/organisms/InputSkills";
+import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -176,6 +178,12 @@ const PostJobPage: FC<PostJobPageProps> = ({})=>{
           <FieldInput title="Nice-To-Have" subTitle="Add nice-to-have skills and qualifications for the role to encorage a more diverse set of candidates to apply">
             <CKEditor form={form} name="niceToHaves" editorLoaded={editorLoaded}/>
           </FieldInput>
+          <FieldInput title="Perks and Benefits" subTitle="Encourage more people to apply by sharing the attractive rewards and benefits you offer your employees">
+            <InputBenefits form={form}/>
+          </FieldInput>
+          <div className="flex justify-end">
+            <Button size="lg">Do a Review</Button>
+          </div>
         </form>
       </Form>
     </div>
