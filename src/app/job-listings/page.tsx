@@ -10,9 +10,7 @@ import {
 } from "@/components/ui/table"
 import { JOB_LISTING_COLUMNS, JOB_LISTING_DATA } from "@/constants";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { MoreVertical } from "lucide-react";
-
+import ButtonActionTable from "@/components/organisms/ButtonActionTable";
 
 interface JobListingsPageProps{
 
@@ -23,41 +21,39 @@ const JobListingsPage: FC<JobListingsPageProps> = ({})=>{
     <div>
       <div className="font-semibold text-xl">Job Listings</div>
       <div className="mt-10">
-      <Table>
-        <TableCaption>A list of your recent invoices.</TableCaption>
-        <TableHeader>
-          <TableRow>
-            {JOB_LISTING_COLUMNS.map((item: string, key: number) => (
-              <TableHead key={item + 1}>{item}</TableHead>
-            ))}
-            <TableHead>Action</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {JOB_LISTING_DATA.map((item: any, i: number) => (
-            <TableRow key={item.roles + i}>
-              <TableCell>{item.roles}</TableCell>
-              <TableCell>
-                <Badge>{item.status}</Badge>
-              </TableCell>
-              <TableCell>{item.datePosted}</TableCell>
-              <TableCell>{item.dueDate}</TableCell>
-              <TableCell>
-                <Badge variant="outline">{item.jobType}</Badge>
-              </TableCell>
-              <TableCell>{item.applicants}</TableCell>
-              <TableCell>
-                {item.applicants} / {item.needs}
-              </TableCell>
-              <TableCell>
-                <Button size="icon" variant="outline">
-                  <MoreVertical className="w-4 h-4"/>
-                </Button>
-              </TableCell>
+        <Table>
+          <TableCaption>A list of your recent invoices.</TableCaption>
+          <TableHeader>
+            <TableRow>
+              {JOB_LISTING_COLUMNS.map((item: string, key: number) => (
+                <TableHead key={item + 1}>{item}</TableHead>
+              ))}
+              <TableHead>Action</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {JOB_LISTING_DATA.map((item: any, i: number) => (
+              <TableRow key={item.roles + i}>
+                <TableCell>{item.roles}</TableCell>
+                <TableCell>
+                  <Badge>{item.status}</Badge>
+                </TableCell>
+                <TableCell>{item.datePosted}</TableCell>
+                <TableCell>{item.dueDate}</TableCell>
+                <TableCell>
+                  <Badge variant="outline">{item.jobType}</Badge>
+                </TableCell>
+                <TableCell>{item.applicants}</TableCell>
+                <TableCell>
+                  {item.applicants} / {item.needs}
+                </TableCell>
+                <TableCell>
+                  <ButtonActionTable url="/job-detail/1"/>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </div>
     </div>
   );

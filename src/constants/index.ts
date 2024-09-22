@@ -17,6 +17,18 @@ export const JOB_LISTING_COLUMNS: string[] = [
   'Needs'
 ];
 
+export const JOB_APPLICANT_COLUMNS: string[] = [
+  'Name',
+  'Applied Date'
+];
+
+export const JOB_APPLICANT_DATA = [
+  {
+    name: 'Ricky Damar Saputra',
+    appliedDate: '12 Aug 2023',
+  }
+];
+
 export const JOB_LISTING_DATA = [
   {
     roles: 'Software Enginner',
