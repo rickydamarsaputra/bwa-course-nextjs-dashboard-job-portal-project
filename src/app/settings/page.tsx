@@ -1,3 +1,4 @@
+import OverviewForm from "@/components/forms/OverviewForm";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React, {FC} from "react";
 
@@ -16,7 +17,7 @@ const SettingsPage: FC<SettingsPageProps> = ({})=>{
           <TabsTrigger className="data-[state=active]:bg-white data-[state=active]:text-black" value="teams">Teams</TabsTrigger>
         </TabsList>
         <TabsContent value="overview">
-          <div>lorem 1</div>
+          <OverviewForm/>
         </TabsContent>
         <TabsContent value="socialLinks">
           <div>lorem 2</div>
