@@ -44,3 +44,14 @@ export const teamFormSchema = z.object({
   instagram: z.string({required_error: 'Instagram link is required'}),
   linkedin: z.string({required_error: 'Linkedin link is required'}),
 });
+
+export const signInFormSchema = z.object({
+  email: z.string({required_error: 'Email is required'}).email({message: 'Email is invalid'}),
+  password: z.string({required_error: 'Password is required'}).min(6, {message: 'Password must be at least 6 characters'}),
+});
+
+export const signUpFormSchema = z.object({
+  name: z.string({required_error: 'Name is required'}).min(3, {message: 'Name must be at least 3 characters'}),
+  email: z.string({required_error: 'Email is required'}).email({message: 'Email is invalid'}),
+  password: z.string({required_error: 'Password is required'}).min(6, {message: 'Password must be at least 6 characters'}),
+});
