@@ -14,17 +14,20 @@ import { EMPLOYEE_OPTIONS, LOCATION_OPTIONS, optionType } from "@/constants";
 import { overviewFormSchema } from "@/lib/form-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon } from "lucide-react";
-import React, {FC} from "react";
+import React, {FC, useEffect, useState} from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import InputSkills from "@/components/organisms/InputSkills";
+import CKEditor from "@/components/organisms/CKEditor";
 
 interface OverviewFormProps{
 
 }
 
 const OverviewForm: FC<OverviewFormProps> = ({})=>{
+  const [editorLoaded, setEditorLoaded] = useState<boolean>(false);
   const form = useForm<z.infer<typeof overviewFormSchema>>({
     resolver: zodResolver(overviewFormSchema),
   });
@@ -32,6 +35,10 @@ const OverviewForm: FC<OverviewFormProps> = ({})=>{
   const onSubmit = (val: z.infer<typeof overviewFormSchema>) => {
     console.log(val);
   }
+
+  useEffect(() =>{
+    setEditorLoaded(true);
+  }, []);
 
   return(
     <div>
@@ -184,8 +191,15 @@ const OverviewForm: FC<OverviewFormProps> = ({})=>{
                     </FormItem>
                   )}
                 />
+                <InputSkills form={form} name="techStack" label="Add Tech Stack"/>
               </div>
             </FieldInput>
+            <FieldInput title="About Company" subTitle="Brief description for your company. URL are hyperlinked">
+              <CKEditor form={form} name="description" editorLoaded={editorLoaded}/>
+            </FieldInput>
+            <div className="flex justify-end">
+              <Button size="lg">Save Changes</Button>
+            </div>
           </form>
         </Form>
     </div>

@@ -26,6 +26,6 @@ export const overviewFormSchema = z.object({
   employee: z.string({required_error: 'Employee is required'}),
   industry: z.string({required_error: 'Industry is required'}),
   dateFounded: z.date({required_error: 'DateFounded is required'}),
-  tectStack: z.string().array().nonempty({message: 'Text Stack must be at least 1 data'}),
+  techStack: z.string({required_error: 'Tech Stack required'}).array().nonempty({message: 'Tech Stack must be at least 1 data'}),
   description: z.string({required_error: 'Description is required'})
 });

@@ -164,7 +164,7 @@ const PostJobPage: FC<PostJobPageProps> = ({})=>{
             />
           </FieldInput>
           <FieldInput title="Required Skills" subTitle="Add required skills for the job">
-            <InputSkills form={form}/>
+            <InputSkills form={form} name="requiredSkills" label="Add Skills"/>
           </FieldInput>
           <FieldInput title="Job Descriptions" subTitle="Job title must be describe one position">
             <CKEditor form={form} name="jobDescription" editorLoaded={editorLoaded}/>
