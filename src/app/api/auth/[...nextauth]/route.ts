@@ -57,4 +57,8 @@ export const authOptions: NextAuthOptions = {
       return session;
     }
   }
-}
+};
+
+const handler = NextAuth(authOptions);
+
+export {handler as GET, handler as POST};
