@@ -10,6 +10,7 @@ import { CiCalendar } from "react-icons/ci";
 import { IoSettingsOutline } from "react-icons/io5";
 import { IoIosLogOut } from "react-icons/io";
 import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 interface SidebarProps{
 
@@ -69,7 +70,11 @@ const Sidebar: FC<SidebarProps> = ({})=>{
                 <IoSettingsOutline className="mr-4 text-lg"/>
                 Settings
               </Button>
-              <Button variant={'ghost'} className="w-full justify-start rounded-none text-red-500 hover:text-red-500 hover:bg-red-50">
+              <Button 
+                variant={'ghost'} 
+                className="w-full justify-start rounded-none text-red-500 hover:text-red-500 hover:bg-red-50"
+                onClick={() => signOut()}
+                >
                 <IoIosLogOut className="mr-4 text-lg"/>
                 Logout
               </Button>
