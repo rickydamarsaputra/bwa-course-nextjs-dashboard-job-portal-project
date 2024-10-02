@@ -1,6 +1,7 @@
 import {Epilogue} from "next/font/google";
 import "../globals.css";
 import { Metadata } from "next";
+import { Toaster } from "@/components/ui/toaster"
 
 const epilogue = Epilogue({subsets: ['latin']});
 
@@ -21,6 +22,7 @@ export default function RootLayout({
       >
         <main>
           {children}
+          <Toaster />
         </main>
       </body>
     </html>
