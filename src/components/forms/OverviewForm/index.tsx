@@ -80,14 +80,14 @@ const OverviewForm: FC<OverviewFormProps> = ({ detail }) => {
         body: JSON.stringify(body)
       });
 
-      await toast({
+      toast({
         title: 'Success',
         description: 'Company overview has been updated',
       });
 
       router.refresh();
     } catch (error) {
-      await toast({
+      toast({
         title: 'Error',
         description: 'Something went wrong',
       });
