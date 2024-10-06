@@ -23,6 +23,10 @@ import InputSkills from "@/components/organisms/InputSkills";
 import CKEditor from "@/components/organisms/CKEditor";
 import useSWR from "swr";
 import { CompanyOverview, Industry } from "@prisma/client";
+import { supabaseUploadFile } from "@/lib/supabase";
+import { useSession } from "next-auth/react";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 interface OverviewFormProps{
   detail: CompanyOverview | undefined;
@@ -31,6 +35,9 @@ interface OverviewFormProps{
 const OverviewForm: FC<OverviewFormProps> = ({ detail }) => {
   const [editorLoaded, setEditorLoaded] = useState<boolean>(false);
   const { data } = useSWR<Industry[]>('/api/company/industry', fetcher);
+  const {data: session} = useSession();
+  const { toast } = useToast();
+  const router = useRouter();
   const techStack: any = detail?.techStack;
 
   const form = useForm<z.infer<typeof overviewFormSchema>>({
@@ -48,8 +55,44 @@ const OverviewForm: FC<OverviewFormProps> = ({ detail }) => {
     }
   });
 
-  const onSubmit = (val: z.infer<typeof overviewFormSchema>) => {
-    console.log(val);
+  const onSubmit = async (val: z.infer<typeof overviewFormSchema>) => {
+    try {
+      let filename = "";
+
+      if(typeof val.image == "object"){
+        const uploading = await supabaseUploadFile(val.image, "company");
+        filename = uploading.filename;
+      } else {
+        filename = val.image;
+      }
+
+      const body = {
+        ...val,
+        image: filename,
+        companyId: session?.user.id
+      }
+
+      await fetch('/api/company/overview', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      });
+
+      await toast({
+        title: 'Success',
+        description: 'Company overview has been updated',
+      });
+
+      router.refresh();
+    } catch (error) {
+      await toast({
+        title: 'Error',
+        description: 'Something went wrong',
+      });
+      console.log(error);
+    }
   }
 
   useEffect(() =>{

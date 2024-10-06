@@ -31,7 +31,7 @@ export const supabaseGetPublicUrl = (filename: File | string, bucket: 'company' 
   const { data } = supabaseClient
   .storage
   .from(bucket)
-  .getPublicUrl('folder/' + filename);
+  .getPublicUrl('public/' + filename);
 
   return {
     publicUrl: data?.publicUrl
@@ -42,7 +42,7 @@ export const supabaseDeleteFile = async (filename: File | string, bucket: 'compa
   const { data, error } = await supabaseClient
   .storage
   .from(bucket)
-  .remove(['folder/' + filename]);
+  .remove(['public/' + filename]);
 
   return {data, error};
 }
