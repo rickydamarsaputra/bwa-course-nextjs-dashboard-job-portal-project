@@ -18,9 +18,11 @@ import React, {FC, useEffect, useState} from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { format } from "date-fns";
-import { cn } from "@/lib/utils";
+import { cn, fetcher } from "@/lib/utils";
 import InputSkills from "@/components/organisms/InputSkills";
 import CKEditor from "@/components/organisms/CKEditor";
+import useSWR from "swr";
+import { Industry } from "@prisma/client";
 
 interface OverviewFormProps{
 
@@ -28,6 +30,7 @@ interface OverviewFormProps{
 
 const OverviewForm: FC<OverviewFormProps> = ({})=>{
   const [editorLoaded, setEditorLoaded] = useState<boolean>(false);
+  const { data } = useSWR<Industry[]>('/api/company/industry', fetcher);
   const form = useForm<z.infer<typeof overviewFormSchema>>({
     resolver: zodResolver(overviewFormSchema),
   });
@@ -139,9 +142,9 @@ const OverviewForm: FC<OverviewFormProps> = ({})=>{
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            {LOCATION_OPTIONS.map((item: optionType, i: number) => (
+                            {data?.map((item: Industry, i: number) => (
                               <SelectItem key={item.id+i} value={item.id}>
-                                {item.label}
+                                {item.name}
                               </SelectItem>
                             ))}
                           </SelectContent>
