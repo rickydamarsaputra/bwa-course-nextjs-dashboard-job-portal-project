@@ -5,8 +5,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Applicants from "@/components/organisms/Applicants";
 import JobDetail from "@/components/organisms/JobDetail";
 import prisma from "../../../../../lib/prisma";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 type paramsType = {
   id: string;
@@ -35,7 +33,6 @@ async function getDetailJob(id: string) {
 }
 
 const JobDetailPage: FC<JobDetailPageProps> = async ({ params }) => {
-  const session = getServerSession(authOptions);
   const job = await getDetailJob(params.id);
 
   return(
@@ -64,7 +61,7 @@ const JobDetailPage: FC<JobDetailPageProps> = async ({ params }) => {
           <Applicants applicants={job?.Applicant}/>
         </TabsContent>
         <TabsContent value="jobDetails">
-          <JobDetail/>
+          <JobDetail detail={job}/>
         </TabsContent>
       </Tabs>
     </div>
