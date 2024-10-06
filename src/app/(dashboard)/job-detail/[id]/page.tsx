@@ -4,13 +4,40 @@ import React, {FC} from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Applicants from "@/components/organisms/Applicants";
 import JobDetail from "@/components/organisms/JobDetail";
+import prisma from "../../../../../lib/prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-
-interface JobDetailPageProps{
-
+type paramsType = {
+  id: string;
 }
 
-const JobDetailPage: FC<JobDetailPageProps> = ({})=>{
+interface JobDetailPageProps{
+  params: paramsType;
+}
+
+async function getDetailJob(id: string) {
+  const job = await prisma.job.findFirst({
+    where: {
+      id: id
+    },
+    include: {
+      Applicant: {
+        include: {
+          User: true
+        }
+      },
+      CategoryJob: true
+    }
+  });
+
+  return job;
+}
+
+const JobDetailPage: FC<JobDetailPageProps> = async ({ params }) => {
+  const session = getServerSession(authOptions);
+  const job = await getDetailJob(params.id);
+
   return(
     <div>
       <div className="inline-flex items-center gap-5 mb-5">
@@ -21,10 +48,10 @@ const JobDetailPage: FC<JobDetailPageProps> = ({})=>{
         </div>
         <div>
           <div className="text-2xl font-semibold mb-1">
-            Brand Designer
+            {job?.roles}
           </div>
           <div>
-            Design . Full-Time . 1/10 Hired
+            {job?.CategoryJob?.name} . {job?.jobType} . {job?.applicants}/{job?.needs} Hired
           </div>
         </div>
       </div>
@@ -34,7 +61,7 @@ const JobDetailPage: FC<JobDetailPageProps> = ({})=>{
           <TabsTrigger className="data-[state=active]:bg-white data-[state=active]:text-black" value="jobDetails">JobDetails</TabsTrigger>
         </TabsList>
         <TabsContent value="applicants">
-          <Applicants/>
+          <Applicants applicants={job?.Applicant}/>
         </TabsContent>
         <TabsContent value="jobDetails">
           <JobDetail/>
